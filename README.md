@@ -13,6 +13,8 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 
 - [ ] The app should know the local time
 
+- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them
+
 
 ## Stretch goals
 

@@ -19,7 +19,7 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 
 - [ ] should have ability to configure the number of notifications per week. Checks weekly weather on Monday morning. If the whole week should be sunny, it can send out only 3 messages/week. Sunny day notifs are more important when they aren't regular.
 
-- [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot unmute"
+- [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
 
 
 ## Stretch goals

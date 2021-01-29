@@ -45,6 +45,7 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 
 
 ## Steps
+- [x] finish base bolt tutorial
 - [ ] make the bot print a "hello world"
 - [ ] write tests
 - [ ] make the bot print at a certain time, day to day

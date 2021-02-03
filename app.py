@@ -61,6 +61,11 @@ def update_home_tab(client, event, logger):
   except Exception as e:
     logger.error(f"Error publishing home tab: {e}")
 
+
+def send_test_message:
+  #TODO: get this to send a "Hello World" message to the slack channel as the bot user
+  pass
+
     
 if __name__ == "__main__":
     app.start(port=int(os.environ.get("PORT", 3000)))

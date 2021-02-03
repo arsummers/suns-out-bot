@@ -62,8 +62,19 @@ def update_home_tab(client, event, logger):
     logger.error(f"Error publishing home tab: {e}")
 
 
-def send_test_message:
-  #TODO: get this to send a "Hello World" message to the slack channel as the bot user
+def send_test_message(client, message):
+  #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
+  pass
+
+@app.command("/mute")
+def mute_bot():
+  """
+  will mute bot upon receiving '/mute' command
+  """
+  pass
+
+@app.command("/unmute")
+def unmute_bot():
   pass
 
     

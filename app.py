@@ -61,9 +61,12 @@ def update_home_tab(client, event, logger):
   except Exception as e:
     logger.error(f"Error publishing home tab: {e}")
 
+# will need to study where to incorporate ack()
 
 def send_test_message(client, message):
   #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
+
+  # if seattle weather == 'sunny' or 'clear', and time == 11AM PST, call this function
   pass
 
 @app.command("/mute")

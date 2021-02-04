@@ -1,6 +1,10 @@
 # suns-out-bot
 Slack bot that lets you know when it is sunny outside, so you can take a walk or otherwise step outside during your lunch break.
 
+IMPORTANT!
+- will need to run ngrok command and `python app.py` in separate windows for this to start working
+
+
 ## Core functionality
 
 - [ ] app should ping a weather API for local weather

@@ -1,7 +1,8 @@
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
-
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 
 app = App(
@@ -9,6 +10,7 @@ app = App(
     signing_secret = os.environ.get("SLACK_SIGNING_SECRET")
 )
 
+client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
 @app.event("app_home_opened")
@@ -61,9 +63,37 @@ def update_home_tab(client, event, logger):
   except Exception as e:
     logger.error(f"Error publishing home tab: {e}")
 
-# will need to study where to incorporate ack()
+###########################################################
+# testing sending a basic message here
 
-def send_test_message(client, message):
+def send_test_message():
+
+
+  channel_name = "general"
+
+  try:
+
+    for response in client.conversations_list():
+      print("is there anyone here?")
+      for channel in result["channels"]:
+        if channel["name"] == channel_name:
+          conversation_id = channel["id"]
+          print(f"Found conversation ID: {conversation_id}")
+          break
+  except Exception as e:
+    print(f"Error: {e}")
+
+
+
+
+
+
+
+
+
+###################################################
+# will need to study where to incorporate ack()
+def send_weather_message(client, message):
   #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
 
   # if seattle weather == 'sunny' or 'clear', and time == 11AM PST, call this function
@@ -83,3 +113,5 @@ def unmute_bot():
     
 if __name__ == "__main__":
     app.start(port=int(os.environ.get("PORT", 3000)))
+    print("helloooooo")
+    send_test_message()

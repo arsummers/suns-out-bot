@@ -2,7 +2,9 @@
 Slack bot that lets you know when it is sunny outside, so you can take a walk or otherwise step outside during your lunch break.
 
 IMPORTANT!
-- will need to run ngrok command and `python app.py` in separate windows for this to start working
+- will need to run `ngrok http 3000` command and `python app.py` in separate windows for this to start working. Then will need to update ngrok url under event subscriptions tag
+
+- something is wrong with my URLs. I think it might be the ngrok URL I have, but don't really know. Postman can't find the channel it's supposed to look for, and the app isn't messaged to general.
 
 
 ## Core functionality

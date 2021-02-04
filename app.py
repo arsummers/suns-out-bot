@@ -41,7 +41,7 @@ def update_home_tab(client, event, logger):
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
+              "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
             }
           },
           {
@@ -66,23 +66,35 @@ def update_home_tab(client, event, logger):
 ###########################################################
 # testing sending a basic message here
 
-def send_test_message():
+def get_channel_id():
 
 
   channel_name = "general"
 
+  # this block grabs the channel ID
   try:
 
     for response in client.conversations_list():
-      print("is there anyone here?")
       for channel in result["channels"]:
         if channel["name"] == channel_name:
           conversation_id = channel["id"]
           print(f"Found conversation ID: {conversation_id}")
           break
-  except Exception as e:
+  except SlackApiError as e:
     print(f"Error: {e}")
 
+# def send_test_message():
+channel_id = "C01LBSKBRH7"
+
+try:
+  result = client.chat_postMessage(
+    channel = channel_id,
+    text = "Hello from suns out bot!"
+  )
+  print(result)
+
+except SlackApiError as e:
+  print(f"Error: {e}")
 
 
 
@@ -93,25 +105,25 @@ def send_test_message():
 
 ###################################################
 # will need to study where to incorporate ack()
-def send_weather_message(client, message):
-  #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
+# def send_weather_message(client, message):
+#   #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
 
-  # if seattle weather == 'sunny' or 'clear', and time == 11AM PST, call this function
-  pass
+#   # if seattle weather == 'sunny' or 'clear', and time == 11AM PST, call this function
+#   pass
 
-@app.command("/mute")
-def mute_bot():
-  """
-  will mute bot upon receiving '/mute' command
-  """
-  pass
+# @app.command("/mute")
+# def mute_bot():
+#   """
+#   will mute bot upon receiving '/mute' command
+#   """
+#   pass
 
-@app.command("/unmute")
-def unmute_bot():
-  pass
+# @app.command("/unmute")
+# def unmute_bot():
+#   pass
 
     
 if __name__ == "__main__":
     app.start(port=int(os.environ.get("PORT", 3000)))
-    print("helloooooo")
-    send_test_message()
+    # get_channel_id()
+    # send_test_message()

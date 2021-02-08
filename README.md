@@ -4,7 +4,6 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 IMPORTANT!
 - will need to run `ngrok http 3000` command and `python app.py` in separate windows for this to start working. Then will need to update ngrok url under event subscriptions tag
 
-- something is wrong with my URLs. I think it might be the ngrok URL I have, but don't really know. Postman can't find the channel it's supposed to look for, and the app isn't messaged to general.
 
 
 ## Core functionality
@@ -52,7 +51,8 @@ IMPORTANT!
 
 ## Steps
 - [x] finish base bolt tutorial
-- [ ] make the bot print a "hello world"
+- [x] make the bot print a "hello world" to a channel
+- [] make the bot print a "hello world" as a DM
 - [ ] write tests
 - [ ] make the bot print at a certain time, day to day
 - [ ] make bot print according to conditionals

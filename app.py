@@ -83,18 +83,18 @@ def get_channel_id():
   except SlackApiError as e:
     print(f"Error: {e}")
 
-# def send_test_message():
-channel_id = "C01LBSKBRH7"
+def send_test_message():
+  channel_id = "C01LBSKBRH7"
 
-try:
-  result = client.chat_postMessage(
-    channel = channel_id,
-    text = "Hello from suns out bot!"
-  )
-  print(result)
+  try:
+    result = client.chat_postMessage(
+      channel = channel_id,
+      text = "Hello from suns out bot on 2/8/21!"
+    )
+    print(result)
 
-except SlackApiError as e:
-  print(f"Error: {e}")
+  except SlackApiError as e:
+    print(f"Error: {e}")
 
 
 
@@ -124,6 +124,6 @@ except SlackApiError as e:
 
     
 if __name__ == "__main__":
+    send_test_message()
     app.start(port=int(os.environ.get("PORT", 3000)))
     # get_channel_id()
-    # send_test_message()

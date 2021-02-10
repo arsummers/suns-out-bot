@@ -97,6 +97,9 @@ def send_test_message():
     print(f"Error: {e}")
 
 
+def send_test_dm():
+  # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
+  pass
 
 
 

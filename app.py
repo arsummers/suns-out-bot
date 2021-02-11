@@ -1,3 +1,4 @@
+import datetime
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
@@ -83,6 +84,7 @@ def get_channel_id():
   except SlackApiError as e:
     print(f"Error: {e}")
 
+
 def send_test_message():
   channel_id = "C01LBSKBRH7"
 
@@ -95,6 +97,26 @@ def send_test_message():
 
   except SlackApiError as e:
     print(f"Error: {e}")
+
+
+def send_test_message_scheduled():
+  minute_from_now = datetime.date.today() + datetime.timedelta(minutes=1)
+  scheduled_time = datetime.time(hour=17, minute=4)
+  schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
+
+  channel_id = "C01LBSKBRH7" #general channel
+
+  try:
+    result = client.chat_scheduleMessage(
+        channel=channel_id,
+        text="Looking towards the future",
+        post_at=schedule_timestamp
+    )
+    # Log the result
+    logger.info(result)
+
+  except SlackApiError as e:
+    logger.error("Error scheduling message: {}".format(e))
 
 
 def send_test_dm():
@@ -128,5 +150,6 @@ def send_test_dm():
     
 if __name__ == "__main__":
     send_test_message()
+    send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
     # get_channel_id()

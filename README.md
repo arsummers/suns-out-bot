@@ -52,12 +52,12 @@ IMPORTANT!
 ## Steps
 - [x] finish base bolt tutorial
 - [x] make the bot print a "hello world" to a channel
-- [ ] make the bot print a "hello world" as a DM
+- [ ] make the bot print a "hello world" as a DM - PENDING
 - [ ] write tests
     - [ ] test for API response
     - [ ] test for timing
     - [ ] test that message is accurate
-- [ ] make the bot print at a certain time, day to day
+- [ ] make the bot print at a certain time, day to day - ACTIVE
 - [ ] make bot print according to conditionals
 - [ ] make bot consume weather API
 - [ ] make bot react to weather API

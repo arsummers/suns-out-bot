@@ -57,7 +57,7 @@ IMPORTANT!
     - [ ] test for API response
     - [ ] test for timing
     - [ ] test that message is accurate
-- [ ] make the bot print at a certain time, day to day - ACTIVE
+- [x] make the bot print at a certain time, day to day
 - [ ] make bot print according to conditionals
 - [ ] make bot consume weather API
 - [ ] make bot react to weather API

@@ -5,6 +5,12 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from slack_bolt import App
+import requests
+import logging
+
+from slack_logger import SlackHandler, SlackFormatter
+
+logger = logging.getLogger(__name__)
 
 app = App(
     token = os.environ.get("SLACK_BOT_TOKEN"),
@@ -100,8 +106,8 @@ def send_test_message():
 
 
 def send_test_message_scheduled():
-  minute_from_now = datetime.date.today() + datetime.timedelta(minutes=1)
-  scheduled_time = datetime.time(hour=17, minute=4)
+  minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
+  scheduled_time = datetime.time(hour=11, minute=0)
   schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
 
   channel_id = "C01LBSKBRH7" #general channel
@@ -117,6 +123,16 @@ def send_test_message_scheduled():
 
   except SlackApiError as e:
     logger.error("Error scheduling message: {}".format(e))
+
+
+def check_weather():
+  # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
+  # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
+
+  url = "http://api.open-notify.org/astros.json" #will change to weather once I decide on one
+  response = requests.get(url)
+  print(response)
+  # pass
 
 
 def send_test_dm():
@@ -149,6 +165,7 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
+    check_weather()
     send_test_message()
     send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))

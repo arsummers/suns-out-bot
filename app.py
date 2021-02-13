@@ -1,4 +1,5 @@
 import datetime
+from datetime import date
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
@@ -91,8 +92,9 @@ def get_channel_id():
     print(f"Error: {e}")
 
 def check_weather():
-  # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
+  # should check for "clear sky" or "few clouds" or "scattered clouds"
+
 
     key = os.environ.get('WEATHER_API_KEY')
 
@@ -104,19 +106,25 @@ def check_weather():
     print(seattle_weather_desc)
     return seattle_weather_desc
 
-    
+
 def send_test_message():
   channel_id = "C01LBSKBRH7"
+  today = date.today()
+  d3 = today.strftime("%m/%d/%y")
 
-  try:
-    result = client.chat_postMessage(
-      channel = channel_id,
-      text = "Hello from suns out bot on 2/8/21!"
-    )
-    print(result)
+  current_weather = check_weather()
 
-  except SlackApiError as e:
-    print(f"Error: {e}")
+  if current_weather == "Light Snow":
+
+    try:
+      result = client.chat_postMessage(
+        channel = channel_id,
+        text = f"Hello from suns out bot on {d3}! The weather is {current_weather}"
+      )
+      print(result)
+
+    except SlackApiError as e:
+      print(f"Error: {e}")
 
 
 def send_test_message_scheduled():
@@ -184,7 +192,7 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    check_weather()
+    # check_weather()
     send_test_message()
     send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))

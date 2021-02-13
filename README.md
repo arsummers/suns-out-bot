@@ -60,7 +60,8 @@ IMPORTANT!
 - [x] make the bot print at a certain time, day to day
 - [ ] make bot print according to conditionals
 - [ ] make bot consume weather API
-    - [ ] user weatherbit API - I know it works
+    - [x] user weatherbit API - I know it works
+    - [x] test file can read weather description 
 - [ ] make bot react to weather API
 - [ ] add pause/mute functions
 

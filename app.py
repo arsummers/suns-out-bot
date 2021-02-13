@@ -90,7 +90,21 @@ def get_channel_id():
   except SlackApiError as e:
     print(f"Error: {e}")
 
+def check_weather():
+  # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
+  # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
 
+    key = os.environ.get('WEATHER_API_KEY')
+
+    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    seattle_weather_desc = json_info["data"][0]["weather"]["description"]
+    print(seattle_weather_desc)
+    return seattle_weather_desc
+
+    
 def send_test_message():
   channel_id = "C01LBSKBRH7"
 
@@ -129,10 +143,15 @@ def check_weather():
   # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
 
-  url = "http://api.open-notify.org/astros.json" #will change to weather once I decide on one
-  response = requests.get(url)
-  print(response)
-  # pass
+    key = os.environ.get('WEATHER_API_KEY')
+
+    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    seattle_weather_desc = json_info["data"][0]["weather"]["description"]
+    print(seattle_weather_desc)
+    return seattle_weather_desc
 
 
 def send_test_dm():

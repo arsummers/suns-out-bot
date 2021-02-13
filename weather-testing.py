@@ -1,6 +1,7 @@
 import requests
+import os
 
-def check_weather():
+def simple_api_tester():
   # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
 
@@ -16,9 +17,18 @@ def check_weather():
     print(f'Response JSON: {json_info}') #returns a json response for the basic API info
     # print(f'Exact: {people_obj')
 
- 
+# simple_api_tester()
 
 
 
+
+def check_weather():
+    key = os.environ.get('WEATHER_API_KEY')
+
+    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    print(json_info)
 
 check_weather()

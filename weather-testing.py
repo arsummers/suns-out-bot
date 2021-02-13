@@ -29,6 +29,7 @@ def check_weather():
 
     response = requests.get(url)
     json_info = response.json()
-    print(json_info)
+    seattle_weather_desc = json_info["data"][0]["weather"]["description"]
+    print(seattle_weather_desc)
 
 check_weather()

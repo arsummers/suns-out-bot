@@ -8,7 +8,8 @@ from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 import requests
 import logging
-import sched, time
+import schedule
+import time
 
 from slack_logger import SlackHandler, SlackFormatter
 
@@ -162,10 +163,17 @@ def send_test_message_scheduled():
 #     print(seattle_weather_desc)
 #     return seattle_weather_desc
 
-
+def schedule_tester():
+  print('THIS MESSAGE IS SCHEDULED')
 
 def schedule_weather_trigger():
-  pass
+  # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
+
+  # will need to use at(time_str) method to get this to trigger at the same time each day
+
+  # will need to use class schedule.Job(interval, schedule-None)
+  schedule.every().day.at("12:57").do(schedule_tester)
+
 
 def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
@@ -197,6 +205,7 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
+    # schedule_weather_trigger()
     check_weather()
     # send_test_message()
     # send_test_message_scheduled()

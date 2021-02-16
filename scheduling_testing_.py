@@ -11,12 +11,11 @@ def schedule_weather_trigger():
   # will need to use at(time_str) method to get this to trigger at the same time each day
 
   # will need to use class schedule.Job(interval, schedule-None)
-  pass
 
-schedule.every().day.at("13:07").do(schedule_tester)
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+    schedule.every().day.at("13:08").do(schedule_tester)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
   
 
-# schedule_weather_trigger()
+schedule_weather_trigger()

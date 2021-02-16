@@ -95,7 +95,7 @@ def get_channel_id():
 
 def check_weather():
   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
-  # should check for "clear sky" or "few clouds" or "scattered clouds"
+  # should check for "Clear sky" or "Few clouds" or "Scattered clouds"
 
 
     key = os.environ.get('WEATHER_API_KEY')
@@ -116,7 +116,7 @@ def send_test_message():
 
   current_weather = check_weather()
 
-  if current_weather == "Light Snow":
+  if current_weather == "Overcast clouds":
 
     try:
       result = client.chat_postMessage(
@@ -163,8 +163,6 @@ def send_test_message_scheduled():
 #     print(seattle_weather_desc)
 #     return seattle_weather_desc
 
-def schedule_tester():
-  print('THIS MESSAGE IS SCHEDULED')
 
 def schedule_weather_trigger():
   # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
@@ -172,7 +170,12 @@ def schedule_weather_trigger():
   # will need to use at(time_str) method to get this to trigger at the same time each day
 
   # will need to use class schedule.Job(interval, schedule-None)
-  schedule.every().day.at("12:57").do(schedule_tester)
+  schedule.every().day.at("13:19").do(send_test_message)
+  while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
 
 
 def send_test_dm():
@@ -205,9 +208,10 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    # schedule_weather_trigger()
-    check_weather()
+    schedule_weather_trigger()
+    # check_weather()
     # send_test_message()
     # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
+
     # get_channel_id()

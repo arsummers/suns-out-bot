@@ -13,8 +13,7 @@ def schedule_weather_trigger():
   # will need to use class schedule.Job(interval, schedule-None)
   pass
 
-schedule.every(10).seconds.do(schedule_tester)
-
+schedule.every().day.at("13:07").do(schedule_tester)
 while True:
     schedule.run_pending()
     time.sleep(1)

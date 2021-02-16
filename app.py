@@ -116,12 +116,12 @@ def send_test_message():
 
   current_weather = check_weather()
 
-  if current_weather == "Overcast clouds":
+  if current_weather == "Overcast clouds" or current_weather == "Scattered Clouds" or current_weather == "Clear sky" or current_weather == "Few clouds":
 
     try:
       result = client.chat_postMessage(
         channel = channel_id,
-        text = f"Hello from suns out bot on {d3}! The weather is {current_weather}"
+        text = f"Hello from suns out bot on {d3}! According to my calculations, the weather right now is {current_weather}."
       )
       print(result)
 
@@ -165,12 +165,10 @@ def send_test_message_scheduled():
 
 
 def schedule_weather_trigger():
+  # this works! reliably!
   # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
 
-  # will need to use at(time_str) method to get this to trigger at the same time each day
-
-  # will need to use class schedule.Job(interval, schedule-None)
-  schedule.every().day.at("13:19").do(send_test_message)
+  schedule.every().day.at("13:33").do(send_test_message)
   while True:
         schedule.run_pending()
         time.sleep(1)

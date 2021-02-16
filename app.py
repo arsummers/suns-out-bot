@@ -8,6 +8,7 @@ from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 import requests
 import logging
+import sched, time
 
 from slack_logger import SlackHandler, SlackFormatter
 
@@ -147,20 +148,24 @@ def send_test_message_scheduled():
     logger.error("Error scheduling message: {}".format(e))
 
 
-def check_weather():
-  # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
-  # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
+# def check_weather():
+#   # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
+#   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
 
-    key = os.environ.get('WEATHER_API_KEY')
+#     key = os.environ.get('WEATHER_API_KEY')
 
-    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+#     url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
 
-    response = requests.get(url)
-    json_info = response.json()
-    seattle_weather_desc = json_info["data"][0]["weather"]["description"]
-    print(seattle_weather_desc)
-    return seattle_weather_desc
+#     response = requests.get(url)
+#     json_info = response.json()
+#     seattle_weather_desc = json_info["data"][0]["weather"]["description"]
+#     print(seattle_weather_desc)
+#     return seattle_weather_desc
 
+
+
+def schedule_weather_trigger():
+  pass
 
 def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
@@ -192,8 +197,8 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    # check_weather()
-    send_test_message()
-    send_test_message_scheduled()
+    check_weather()
+    # send_test_message()
+    # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
     # get_channel_id()

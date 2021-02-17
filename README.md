@@ -58,11 +58,11 @@ IMPORTANT!
     - [ ] test for timing
     - [ ] test that message is accurate
 - [x] make the bot print at a certain time, day to day
-- [ ] make bot print according to conditionals
-- [ ] make bot consume weather API
+- [x] make bot print according to conditionals
+- [x] make bot consume weather API
     - [x] user weatherbit API - I know it works
     - [x] test file can read weather description 
-- [ ] make bot react to weather API
+- [x] make bot react to weather API
 - [ ] add pause/mute functions
 
 ## APIs
@@ -78,3 +78,4 @@ Coming soon!
 
 # Change Log
 
+2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM

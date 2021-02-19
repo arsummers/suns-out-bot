@@ -178,6 +178,10 @@ def schedule_weather_trigger():
 
 def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
+  # will need to grab conversation ID
+  # "provide the user's user ID as the channel value "
+  # beware of channel_not_found errors
+
   pass
 
 
@@ -206,10 +210,10 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    schedule_weather_trigger()
+    # schedule_weather_trigger()
     # check_weather()
     # send_test_message()
     # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
 
-    # get_channel_id()
+    get_channel_id()

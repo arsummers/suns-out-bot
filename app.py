@@ -108,20 +108,32 @@ def check_weather():
     print(seattle_weather_desc)
     return seattle_weather_desc
 
+def check_and_convert_temp():
+    key = os.environ.get('WEATHER_API_KEY')
+
+    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    celsius_temp = json_info["data"][0]["temp"]
+    fahrenheit_temp = int((celsius_temp * 9/5) + 32)
+    return fahrenheit_temp
+
 
 def send_test_message():
-  channel_id = "C01LBSKBRH7"
+  channel_id = os.environ.get('BOT_CHANNEL_ID')
   today = date.today()
   d3 = today.strftime("%m/%d/%y")
 
   current_weather = check_weather()
+  current_temp = check_and_convert_temp()
 
-  if current_weather == "Overcast clouds" or current_weather == "Scattered Clouds" or current_weather == "Clear sky" or current_weather == "Few clouds":
+  if current_weather == "Overcast clouds" or current_weather == "Overcast Clouds" or current_weather == "Scattered Clouds" or current_weather == "Clear sky" or current_weather == "Few clouds":
 
     try:
       result = client.chat_postMessage(
         channel = channel_id,
-        text = f"Hello from suns out bot on {d3}! According to my calculations, the weather right now is {current_weather}."
+        text = f"Good morning! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit."
       )
       print(result)
 
@@ -168,7 +180,7 @@ def schedule_weather_trigger():
   # this works! reliably!
   # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
 
-  schedule.every().day.at("13:33").do(send_test_message)
+  schedule.every().day.at("15:39").do(send_test_message)
   while True:
         schedule.run_pending()
         time.sleep(1)
@@ -212,7 +224,7 @@ def send_test_dm():
 if __name__ == "__main__":
     # schedule_weather_trigger()
     # check_weather()
-    # send_test_message()
+    send_test_message()
     # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
 

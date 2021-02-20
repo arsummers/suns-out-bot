@@ -79,3 +79,15 @@ Coming soon!
 # Change Log
 
 2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM
+
+2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
+
+# To add to your workspace
+
+- Fork and clone this repo
+- Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
+- In your `.env` file, add these elements:L
+    -
+    -
+    -
+- Deployment incoming

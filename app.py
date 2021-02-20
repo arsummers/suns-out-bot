@@ -120,7 +120,7 @@ def check_and_convert_temp():
     return fahrenheit_temp
 
 
-def send_test_message():
+def send_weather_message():
   channel_id = os.environ.get('BOT_CHANNEL_ID')
   today = date.today()
   d3 = today.strftime("%m/%d/%y")
@@ -180,7 +180,7 @@ def schedule_weather_trigger():
   # this works! reliably!
   # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
 
-  schedule.every().day.at("15:39").do(send_test_message)
+  schedule.every().day.at("11:00").do(send_weather_message)
   while True:
         schedule.run_pending()
         time.sleep(1)
@@ -222,9 +222,9 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    # schedule_weather_trigger()
+    schedule_weather_trigger()
     # check_weather()
-    send_test_message()
+    # send_weather_message()
     # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
 

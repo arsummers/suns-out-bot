@@ -8,17 +8,15 @@ IMPORTANT!
 
 ## Core functionality
 
-- [ ] app should ping a weather API for local weather
+- [x] app should ping a weather API for local weather
 
-- [ ] if weather is sunny, if should send a message that it's sunny out, and maybe you should step outside
+- [x] if weather is sunny or otherwise dry, if should send a message that it's sunny out, and maybe you should step outside
 
-- [ ] if the weather is any variant of dry, it should send a different message about going out
+- [x] it should send the message at 10:30 or 11:00 AM, so that the user has time to decide if they want to go outside on a break later in the day
 
-- [ ] it should send the message at 10:30 or 11:00 AM, so that the user has time to decide if they want to go outside on a break later in the day
+- [x] The app should know the local time
 
-- [ ] The app should know the local time
-
-- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them
+- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them - DEBATABLE. Might be best to send to bot channel.
 
 - [ ] should have ability to mute for set periods of time, if possible
 
@@ -73,17 +71,6 @@ IMPORTANT!
 
 
 # How to add to your workspace
-
-Coming soon!
-
-# Change Log
-
-2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM
-
-2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
-
-# To add to your workspace
-
 - Fork and clone this repo
 - Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
 - In your `.env` file, add these elements:L
@@ -91,3 +78,12 @@ Coming soon!
     -
     -
 - Deployment incoming
+- Don't forget to invite `suns-out-bot` to the channel you want it to post to
+
+# Change Log
+
+2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM
+
+2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
+
+

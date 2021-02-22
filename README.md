@@ -73,12 +73,20 @@ IMPORTANT!
 # How to add to your workspace
 - Fork and clone this repo
 - Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
-- In your `.env` file, add these elements:L
-    -
-    -
-    -
+- In your `.env` file, add these elements:
+    - `SLACK_BOT_TOKEN`
+        - needed for setting up the basic development Slack server
+        - Detailed instructions on grabbing it here: 
+    - `SLACK_SIGNING SECRET`
+        - also needed to set up your Slack development server
+        - Detailed instructions on grabbing it here:
+    - `BOT_CHANNEL_ID`
+        - Enter `https://slack.com/api/conversations.list` into Postman, or ping it from your terminal. It will call the `get_channel_id` function, and return a JSON response with information about the channel. Then, you can copy the value in the `id` section into your `.env` file.
+    - `WEATHER_API_KEY`
+        - needed to access the weather report. You can change the city/zip code as needed.
+        - Found at Weatherbit here: 
 - Deployment incoming
-- Don't forget to invite `suns-out-bot` to the channel you want it to post to
+- Don't forget to invite `suns-out-bot` to the channel you want it to post to, otherwise you will get an error.
 
 # Change Log
 

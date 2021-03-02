@@ -1,4 +1,5 @@
 import datetime
+from datetime import date
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
@@ -7,6 +8,8 @@ from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 import requests
 import logging
+import schedule
+import time
 
 from slack_logger import SlackHandler, SlackFormatter
 
@@ -20,55 +23,55 @@ app = App(
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
-@app.event("app_home_opened")
-def update_home_tab(client, event, logger):
-  try:
-    # views.publish is the method that your app uses to push a view to the Home tab
-    client.views_publish(
-      # the user that opened your app's app home
-      user_id=event["user"],
-      # the view object that appears in the app home
-      view={
-        "type": "home",
-        "callback_id": "home_view",
+# @app.event("app_home_opened")
+# def update_home_tab(client, event, logger):
+#   try:
+#     # views.publish is the method that your app uses to push a view to the Home tab
+#     client.views_publish(
+#       # the user that opened your app's app home
+#       user_id=event["user"],
+#       # the view object that appears in the app home
+#       view={
+#         "type": "home",
+#         "callback_id": "home_view",
 
-        # body of the view
-        "blocks": [
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "*Welcome to your _App's Home_* :tada:"
-            }
-          },
-          {
-            "type": "divider"
-          },
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
-            }
-          },
-          {
-            "type": "actions",
-            "elements": [
-              {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Click me!"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    )
+#         # body of the view
+#         "blocks": [
+#           {
+#             "type": "section",
+#             "text": {
+#               "type": "mrkdwn",
+#               "text": "*Welcome to your _App's Home_* :tada:"
+#             }
+#           },
+#           {
+#             "type": "divider"
+#           },
+#           {
+#             "type": "section",
+#             "text": {
+#               "type": "mrkdwn",
+#               "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
+#             }
+#           },
+#           {
+#             "type": "actions",
+#             "elements": [
+#               {
+#                 "type": "button",
+#                 "text": {
+#                   "type": "plain_text",
+#                   "text": "Click me!"
+#                 }
+#               }
+#             ]
+#           }
+#         ]
+#       }
+#     )
   
-  except Exception as e:
-    logger.error(f"Error publishing home tab: {e}")
+#   except Exception as e:
+#     logger.error(f"Error publishing home tab: {e}")
 
 ###########################################################
 # testing sending a basic message here
@@ -90,53 +93,99 @@ def get_channel_id():
   except SlackApiError as e:
     print(f"Error: {e}")
 
-
-def send_test_message():
-  channel_id = "C01LBSKBRH7"
-
-  try:
-    result = client.chat_postMessage(
-      channel = channel_id,
-      text = "Hello from suns out bot on 2/8/21!"
-    )
-    print(result)
-
-  except SlackApiError as e:
-    print(f"Error: {e}")
-
-
-def send_test_message_scheduled():
-  minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
-  scheduled_time = datetime.time(hour=11, minute=0)
-  schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
-
-  channel_id = "C01LBSKBRH7" #general channel
-
-  try:
-    result = client.chat_scheduleMessage(
-        channel=channel_id,
-        text="Looking towards the future",
-        post_at=schedule_timestamp
-    )
-    # Log the result
-    logger.info(result)
-
-  except SlackApiError as e:
-    logger.error("Error scheduling message: {}".format(e))
-
-
 def check_weather():
-  # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
-
-  url = "http://api.open-notify.org/astros.json" #will change to weather once I decide on one
-  response = requests.get(url)
-  print(response)
-  # pass
+  # should check for "Clear sky" or "Few clouds" or "Scattered clouds"
 
 
+    key = os.environ.get('WEATHER_API_KEY')
+    zip_code = os.environ.get('ZIP_CODE')
+
+    url = f'https://api.weatherbit.io/v2.0/current?postal_code={zip_code}&country=US&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    weather_desc = json_info["data"][0]["weather"]["description"]
+    print(weather_desc)
+    return weather_desc
+
+def check_and_convert_temp():
+    key = os.environ.get('WEATHER_API_KEY')
+    zip_code = os.environ.get('ZIP_CODE')
+
+    url = f'https://api.weatherbit.io/v2.0/current?postal_code={zip_code}&country=US&key={key}'
+
+    response = requests.get(url)
+    json_info = response.json()
+    celsius_temp = json_info["data"][0]["temp"]
+    fahrenheit_temp = int((celsius_temp * 9/5) + 32)
+    return fahrenheit_temp
+
+
+def send_weather_message():
+  channel_id = os.environ.get('BOT_CHANNEL_ID')
+  today = date.today()
+  d3 = today.strftime("%m/%d/%y")
+
+  current_weather = check_weather()
+  current_temp = check_and_convert_temp()
+
+  if current_weather == "Overcast clouds" or current_weather == "Overcast Clouds" or current_weather == "Scattered Clouds" or current_weather == "Clear sky" or current_weather == "Few clouds":
+
+    try:
+      result = client.chat_postMessage(
+        channel = channel_id,
+        text = f"Good afternoon! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit."
+      )
+      print(result)
+
+    except SlackApiError as e:
+      print(f"Error: {e}")
+
+
+# This will stay commented out until I can see if it can be used to check the weather as well as send a message.
+# def send_test_message_scheduled():
+#   minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
+#   scheduled_time = datetime.time(hour=16, minute=36)
+#   schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
+
+#   channel_id = "C01LBSKBRH7" #general channel
+
+#   try:
+#     result = client.chat_scheduleMessage(
+#         channel=channel_id,
+#         text="Looking towards the future",
+#         post_at=schedule_timestamp
+#     )
+#     # Log the result
+#     logger.info(result)
+
+#   except SlackApiError as e:
+#     logger.error("Error scheduling message: {}".format(e))
+
+
+def schedule_weather_trigger():
+  """
+  Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted
+
+  """
+
+  schedule.every().day.at("11:59").do(send_weather_message)
+  while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+
+#################################
+#        STRETCH GOAL           #
+#################################
 def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
+  # will need to grab conversation ID
+  # "provide the user's user ID as the channel value "
+  # beware of channel_not_found errors
+
   pass
 
 
@@ -165,8 +214,10 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    check_weather()
-    send_test_message()
-    send_test_message_scheduled()
+    schedule_weather_trigger()
+    # check_weather()
+    # send_weather_message()
+    # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
-    # get_channel_id()
+
+    get_channel_id()

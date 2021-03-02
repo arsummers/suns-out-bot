@@ -23,6 +23,7 @@ def simple_api_tester():
 
 
 def check_weather():
+    # should check for "clear sky" or "few clouds"
     key = os.environ.get('WEATHER_API_KEY')
 
     url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'

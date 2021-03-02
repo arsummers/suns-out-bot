@@ -8,17 +8,15 @@ IMPORTANT!
 
 ## Core functionality
 
-- [ ] app should ping a weather API for local weather
+- [x] app should ping a weather API for local weather
 
-- [ ] if weather is sunny, if should send a message that it's sunny out, and maybe you should step outside
+- [x] if weather is sunny or otherwise dry, if should send a message that it's sunny out, and maybe you should step outside
 
-- [ ] if the weather is any variant of dry, it should send a different message about going out
+- [x] it should send the message at 10:30 or 11:00 AM, so that the user has time to decide if they want to go outside on a break later in the day
 
-- [ ] it should send the message at 10:30 or 11:00 AM, so that the user has time to decide if they want to go outside on a break later in the day
+- [x] The app should know the local time
 
-- [ ] The app should know the local time
-
-- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them
+- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them - DEBATABLE. Might be best to send to bot channel.
 
 - [ ] should have ability to mute for set periods of time, if possible
 
@@ -58,22 +56,48 @@ IMPORTANT!
     - [ ] test for timing
     - [ ] test that message is accurate
 - [x] make the bot print at a certain time, day to day
-- [ ] make bot print according to conditionals
-- [ ] make bot consume weather API
-    - [ ] user weatherbit API - I know it works
-- [ ] make bot react to weather API
+- [x] make bot print according to conditionals
+- [x] make bot consume weather API
+    - [x] user weatherbit API - I know it works
+    - [x] test file can read weather description 
+- [x] make bot react to weather API
 - [ ] add pause/mute functions
 
 ## APIs
-- Slack's Socket Mode
-- Weather API
+- Slack's Bolt library
+- Weatherbit API
 - chat.PostMessage API
-- 
+
 
 
 # How to add to your workspace
-
-Coming soon!
+- Fork and clone this repo
+- Sign up with Slack as a developer
+- Add these permissions to your bot:
+    - 
+    - 
+- Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
+- create a `.env` file for your secret keys
+- In your `.env` file, add these elements:
+    - `SLACK_BOT_TOKEN`
+        - needed for setting up the basic development Slack server
+        - Detailed instructions on grabbing it here: 
+    - `SLACK_SIGNING SECRET`
+        - also needed to set up your Slack development server
+        - Detailed instructions on grabbing it here:
+    - `BOT_CHANNEL_ID`
+        - Enter `https://slack.com/api/conversations.list` into Postman, or ping it from your terminal. It will call the `get_channel_id` function, and return a JSON response with information about the channel. Then, you can copy the value in the `id` section into your `.env` file.
+    - `WEATHER_API_KEY`
+        - needed to access the weather report. You can change the city/zip code as needed.
+        - Found at Weatherbit here: 
+- Deployment incoming
+- Don't forget to invite `suns-out-bot` to the channel you want it to post to, otherwise you will get an error.
 
 # Change Log
+
+2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM
+
+2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
+
+3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
 

@@ -99,4 +99,5 @@ IMPORTANT!
 
 2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
 
+3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
 

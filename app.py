@@ -143,51 +143,34 @@ def send_weather_message():
       print(f"Error: {e}")
 
 
-def send_test_message_scheduled():
-  minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
-  scheduled_time = datetime.time(hour=16, minute=36)
-  schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
+# This will stay commented out until I can see if it can be used to check the weather as well as send a message.
+# def send_test_message_scheduled():
+#   minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
+#   scheduled_time = datetime.time(hour=16, minute=36)
+#   schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
 
-  channel_id = "C01LBSKBRH7" #general channel
+#   channel_id = "C01LBSKBRH7" #general channel
 
-  try:
-    result = client.chat_scheduleMessage(
-        channel=channel_id,
-        text="Looking towards the future",
-        post_at=schedule_timestamp
-    )
-    # Log the result
-    logger.info(result)
+#   try:
+#     result = client.chat_scheduleMessage(
+#         channel=channel_id,
+#         text="Looking towards the future",
+#         post_at=schedule_timestamp
+#     )
+#     # Log the result
+#     logger.info(result)
 
-  except SlackApiError as e:
-    logger.error("Error scheduling message: {}".format(e))
-
-
-# def check_weather():
-#   # should return a weather object from an external API. The bot should should the weather, then, for now, send a message with the current weather.
-#   # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
-
-#     key = os.environ.get('WEATHER_API_KEY')
-
-#     url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
-
-#     response = requests.get(url)
-#     json_info = response.json()
-#     seattle_weather_desc = json_info["data"][0]["weather"]["description"]
-#     print(seattle_weather_desc)
-#     return seattle_weather_desc
+#   except SlackApiError as e:
+#     logger.error("Error scheduling message: {}".format(e))
 
 
 def schedule_weather_trigger():
   """
-  Set to run in the background. You can change the time the message is scheduled by entering a time on the first line. It takes 24 hour time, so if you want this to check the weather at 1 PM locally, you would change the time to "13:00".
-
+  Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted
 
   """
- 
-  # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
 
-  schedule.every().day.at("16:48").do(send_weather_message)
+  schedule.every().day.at("11:59").do(send_weather_message)
   while True:
         schedule.run_pending()
         time.sleep(1)

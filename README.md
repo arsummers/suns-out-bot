@@ -64,15 +64,20 @@ IMPORTANT!
 - [ ] add pause/mute functions
 
 ## APIs
-- Slack's Socket Mode
-- Weather API
+- Slack's Bolt library
+- Weatherbit API
 - chat.PostMessage API
-- 
+
 
 
 # How to add to your workspace
 - Fork and clone this repo
+- Sign up with Slack as a developer
+- Add these permissions to your bot:
+    - 
+    - 
 - Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
+- create a `.env` file for your secret keys
 - In your `.env` file, add these elements:
     - `SLACK_BOT_TOKEN`
         - needed for setting up the basic development Slack server

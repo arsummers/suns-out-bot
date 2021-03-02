@@ -23,55 +23,55 @@ app = App(
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
-@app.event("app_home_opened")
-def update_home_tab(client, event, logger):
-  try:
-    # views.publish is the method that your app uses to push a view to the Home tab
-    client.views_publish(
-      # the user that opened your app's app home
-      user_id=event["user"],
-      # the view object that appears in the app home
-      view={
-        "type": "home",
-        "callback_id": "home_view",
+# @app.event("app_home_opened")
+# def update_home_tab(client, event, logger):
+#   try:
+#     # views.publish is the method that your app uses to push a view to the Home tab
+#     client.views_publish(
+#       # the user that opened your app's app home
+#       user_id=event["user"],
+#       # the view object that appears in the app home
+#       view={
+#         "type": "home",
+#         "callback_id": "home_view",
 
-        # body of the view
-        "blocks": [
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "*Welcome to your _App's Home_* :tada:"
-            }
-          },
-          {
-            "type": "divider"
-          },
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
-            }
-          },
-          {
-            "type": "actions",
-            "elements": [
-              {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Click me!"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    )
+#         # body of the view
+#         "blocks": [
+#           {
+#             "type": "section",
+#             "text": {
+#               "type": "mrkdwn",
+#               "text": "*Welcome to your _App's Home_* :tada:"
+#             }
+#           },
+#           {
+#             "type": "divider"
+#           },
+#           {
+#             "type": "section",
+#             "text": {
+#               "type": "mrkdwn",
+#               "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
+#             }
+#           },
+#           {
+#             "type": "actions",
+#             "elements": [
+#               {
+#                 "type": "button",
+#                 "text": {
+#                   "type": "plain_text",
+#                   "text": "Click me!"
+#                 }
+#               }
+#             ]
+#           }
+#         ]
+#       }
+#     )
   
-  except Exception as e:
-    logger.error(f"Error publishing home tab: {e}")
+#   except Exception as e:
+#     logger.error(f"Error publishing home tab: {e}")
 
 ###########################################################
 # testing sending a basic message here
@@ -99,19 +99,21 @@ def check_weather():
 
 
     key = os.environ.get('WEATHER_API_KEY')
+    zip_code = os.environ.get('ZIP_CODE')
 
-    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+    url = f'https://api.weatherbit.io/v2.0/current?postal_code={zip_code}&country=US&key={key}'
 
     response = requests.get(url)
     json_info = response.json()
-    seattle_weather_desc = json_info["data"][0]["weather"]["description"]
-    print(seattle_weather_desc)
-    return seattle_weather_desc
+    weather_desc = json_info["data"][0]["weather"]["description"]
+    print(weather_desc)
+    return weather_desc
 
 def check_and_convert_temp():
     key = os.environ.get('WEATHER_API_KEY')
+    zip_code = os.environ.get('ZIP_CODE')
 
-    url = f'https://api.weatherbit.io/v2.0/current?city=seattle&key={key}'
+    url = f'https://api.weatherbit.io/v2.0/current?postal_code={zip_code}&country=US&key={key}'
 
     response = requests.get(url)
     json_info = response.json()
@@ -133,7 +135,7 @@ def send_weather_message():
     try:
       result = client.chat_postMessage(
         channel = channel_id,
-        text = f"Good morning! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit."
+        text = f"Good afternoon! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit."
       )
       print(result)
 
@@ -143,7 +145,7 @@ def send_weather_message():
 
 def send_test_message_scheduled():
   minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
-  scheduled_time = datetime.time(hour=11, minute=0)
+  scheduled_time = datetime.time(hour=16, minute=36)
   schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
 
   channel_id = "C01LBSKBRH7" #general channel
@@ -177,17 +179,24 @@ def send_test_message_scheduled():
 
 
 def schedule_weather_trigger():
-  # this works! reliably!
+  """
+  Set to run in the background. You can change the time the message is scheduled by entering a time on the first line. It takes 24 hour time, so if you want this to check the weather at 1 PM locally, you would change the time to "13:00".
+
+
+  """
+ 
   # should be used to call check_weather on a schedule, so I won't have to rely on the next day forecast. It should call check_weather at 11 AM, then call send_message right after if the weather is satisfactory
 
-  schedule.every().day.at("11:00").do(send_weather_message)
+  schedule.every().day.at("16:48").do(send_weather_message)
   while True:
         schedule.run_pending()
         time.sleep(1)
 
 
 
-
+#################################
+#        STRETCH GOAL           #
+#################################
 def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
   # will need to grab conversation ID

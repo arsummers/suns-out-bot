@@ -198,8 +198,7 @@ def send_test_dm():
 # def send_weather_message(client, message):
 #   #TODO: get this to send a "Hello World" message to the slack channel as the bot user. say() function only triggers if it has a message to reply to, so won't be useful here. Will likely need to use client.chat_postMessage for this project
 
-#   # if seattle weather == 'sunny' or 'clear', and time == 11AM PST, call this function
-#   pass
+
 
 # @app.command("/mute")
 # def mute_bot():

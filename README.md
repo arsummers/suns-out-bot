@@ -81,15 +81,21 @@ IMPORTANT!
 - In your `.env` file, add these elements:
     - `SLACK_BOT_TOKEN`
         - needed for setting up the basic development Slack server
-        - Detailed instructions on grabbing it here: 
+        - Detailed instructions on setting up and grabbing your bot user token [here](https://api.slack.com/authentication/token-types)
     - `SLACK_SIGNING SECRET`
         - also needed to set up your Slack development server
-        - Detailed instructions on grabbing it here:
+        - Instructions on grabbing that [here](https://api.slack.com/authentication/verifying-requests-from-slack#signing_secrets_admin_page):
     - `BOT_CHANNEL_ID`
+        - comment `get_channel_id` back in at the bottom of `app.py`
+        - run `python app.py`
         - Enter `https://slack.com/api/conversations.list` into Postman, or ping it from your terminal. It will call the `get_channel_id` function, and return a JSON response with information about the channel. Then, you can copy the value in the `id` section into your `.env` file.
     - `WEATHER_API_KEY`
         - needed to access the weather report. You can change the city/zip code as needed.
-        - Found at Weatherbit here: 
+        - Found at Weatherbit [here](https://www.weatherbit.io/)
+    - `ZIP_CODE`
+        - This is needed so that the weatherbit API can know which location to check. Zip code is more exact and handles duplicates better than a city name.
+
+- While in development mode, you will need to run `export YOUR_ENV_KEY=YOUR_ENV_VALUE` in the terminal for each item in the list above, e.g. `export ZIP_CODE=12345`
 - Deployment incoming
 - Don't forget to invite `suns-out-bot` to the channel you want it to post to, otherwise you will get an error.
 

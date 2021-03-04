@@ -20,22 +20,22 @@ IMPORTANT!
 
 - [ ] should have ability to mute for set periods of time, if possible
 
-- [ ] should have ability to configure the number of notifications per week. Checks weekly weather on Monday morning. If the whole week should be sunny, it can send out only 3 messages/week. Sunny day notifs are more important when they aren't regular.
 
 - [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
 
 
 ## Stretch goals
 
-- [ ] make the API easily access other cityies upon setup in a workspace
+- [ ] make the API easily access other cities upon setup in a workspace
 
 ## Use cases
-- [ ] People in offices with limited window access
-- [ ] Gives more time to plan lunch breaks
-- [ ] Saves time having to check the weather
+-  People in offices with limited window access
+-  Gives more time to plan lunch breaks
+-  Saves time having to check the weather
 
 ## Limitations
-- [ ] The weather report can be wrong
+- The weather report can be wrong
+- This app is created by a human, and sometimes humans create bugs
 
 ## Testing
 - [ ] It should send a message at the right time
@@ -107,3 +107,6 @@ IMPORTANT!
 
 3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
 
+## Useful Links
+
+(Slack message scheduling)[https://api.slack.com/messaging/scheduling]

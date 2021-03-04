@@ -148,12 +148,19 @@ def send_weather_message():
 
 # This will stay commented out until I can see if it can be used to check the weather as well as send a message.
 def send_test_message_scheduled():
-  minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
-  scheduled_time = datetime.time(hour=17, minute=3)
-  schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
+  """
+  uses Slack's scheduleMessage function to check the weather and send a message at a specified time daily.
+  """
+
+  # minute_from_now = datetime.date.today() + datetime.timedelta(minutes=1)
+  now = datetime.date.today()
+  scheduled_time = datetime.time(hour=15, minute=39)
+  schedule_timestamp = datetime.datetime.combine(now, scheduled_time).strftime('%s')
 
   channel_id = os.environ.get('BOT_CHANNEL_ID')
-  weather_message = send_weather_message()
+  
+  # if datetime
+
 
   try:
     result = client.chat_scheduleMessage(

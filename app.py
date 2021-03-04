@@ -123,6 +123,9 @@ def check_and_convert_temp():
 
 
 def send_weather_message():
+  """
+  Checks weather. If certain conditions are met, it will send a message saying the current weather conditions and temperate, and a prompt to go outside.
+  """
   channel_id = os.environ.get('BOT_CHANNEL_ID')
   today = date.today()
   d3 = today.strftime("%m/%d/%y")
@@ -135,7 +138,7 @@ def send_weather_message():
     try:
       result = client.chat_postMessage(
         channel = channel_id,
-        text = f"Good afternoon! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit."
+        text = f"Good afternoon! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit. Maybe this would be a nice time to go outside."
       )
       print(result)
 
@@ -144,24 +147,25 @@ def send_weather_message():
 
 
 # This will stay commented out until I can see if it can be used to check the weather as well as send a message.
-# def send_test_message_scheduled():
-#   minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
-#   scheduled_time = datetime.time(hour=16, minute=36)
-#   schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
+def send_test_message_scheduled():
+  minute_from_now = datetime.date.today() + datetime.timedelta(days=1)
+  scheduled_time = datetime.time(hour=17, minute=3)
+  schedule_timestamp = datetime.datetime.combine(minute_from_now, scheduled_time).strftime('%s')
 
-#   channel_id = "C01LBSKBRH7" #general channel
+  channel_id = os.environ.get('BOT_CHANNEL_ID')
+  weather_message = send_weather_message()
 
-#   try:
-#     result = client.chat_scheduleMessage(
-#         channel=channel_id,
-#         text="Looking towards the future",
-#         post_at=schedule_timestamp
-#     )
-#     # Log the result
-#     logger.info(result)
+  try:
+    result = client.chat_scheduleMessage(
+        channel=channel_id,
+        text="looking to the future",
+        post_at=schedule_timestamp
+    )
+    # Log the result
+    logger.info(result)
 
-#   except SlackApiError as e:
-#     logger.error("Error scheduling message: {}".format(e))
+  except SlackApiError as e:
+    logger.error("Error scheduling message: {}".format(e))
 
 
 def schedule_weather_trigger():
@@ -213,10 +217,10 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    schedule_weather_trigger()
+    # schedule_weather_trigger()
     # check_weather()
     # send_weather_message()
-    # send_test_message_scheduled()
+    send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
 
-    get_channel_id()
+    # get_channel_id()

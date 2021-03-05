@@ -23,60 +23,10 @@ app = App(
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
-# @app.event("app_home_opened")
-# def update_home_tab(client, event, logger):
-#   try:
-#     # views.publish is the method that your app uses to push a view to the Home tab
-#     client.views_publish(
-#       # the user that opened your app's app home
-#       user_id=event["user"],
-#       # the view object that appears in the app home
-#       view={
-#         "type": "home",
-#         "callback_id": "home_view",
-
-#         # body of the view
-#         "blocks": [
-#           {
-#             "type": "section",
-#             "text": {
-#               "type": "mrkdwn",
-#               "text": "*Welcome to your _App's Home_* :tada:"
-#             }
-#           },
-#           {
-#             "type": "divider"
-#           },
-#           {
-#             "type": "section",
-#             "text": {
-#               "type": "mrkdwn",
-#               "text": " HEY TESTING TESTING DOES THIS TAKE EDITS This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
-#             }
-#           },
-#           {
-#             "type": "actions",
-#             "elements": [
-#               {
-#                 "type": "button",
-#                 "text": {
-#                   "type": "plain_text",
-#                   "text": "Click me!"
-#                 }
-#               }
-#             ]
-#           }
-#         ]
-#       }
-#     )
-  
-#   except Exception as e:
-#     logger.error(f"Error publishing home tab: {e}")
-
-###########################################################
-# testing sending a basic message here
-
 def get_channel_id():
+  """
+  gets the channel ID of all your Slack channels.
+  """
 
 
   channel_name = "general"
@@ -94,9 +44,9 @@ def get_channel_id():
     print(f"Error: {e}")
 
 def check_weather():
-  # message should say something like "According to my calculations, it is {weather} and {} degrees outside. Today should be a good day to get outside for fresh air on your lunchbreak."
-  # should check for "Clear sky" or "Few clouds" or "Scattered clouds"
-
+  """
+  Pings weatherbit API, and returns a JSON response of the weather description in the provided zipcode. JSON response gets converted to lowercase for easier handling.
+  """
 
     key = os.environ.get('WEATHER_API_KEY')
     zip_code = os.environ.get('ZIP_CODE')
@@ -106,10 +56,13 @@ def check_weather():
     response = requests.get(url)
     json_info = response.json()
     weather_desc = json_info["data"][0]["weather"]["description"]
-    print(weather_desc)
-    return weather_desc
+    print(weather_desc.lower())
+    return weather_desc.lower()
 
 def check_and_convert_temp():
+    """
+    Pings weatherbit API, returns a JSON response of the current temperatue, and converts it to Fahrenheit.
+    """
     key = os.environ.get('WEATHER_API_KEY')
     zip_code = os.environ.get('ZIP_CODE')
 
@@ -133,12 +86,14 @@ def send_weather_message():
   current_weather = check_weather()
   current_temp = check_and_convert_temp()
 
-  if current_weather == "Overcast clouds" or current_weather == "Overcast Clouds" or current_weather == "Scattered Clouds" or current_weather == "Clear sky" or current_weather == "Few clouds":
+  acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear sky', 'few clouds', 'moderate rain']
+
+  if current_weather in acceptable_weather:
 
     try:
       result = client.chat_postMessage(
         channel = channel_id,
-        text = f"Good afternoon! According to my calculations, the weather right now is {current_weather} and {current_temp} degrees Fahrenheit. Maybe this would be a nice time to go outside."
+        text = f"Good afternoon! According to my calculations, the outside world features {current_weather} and is {current_temp} degrees Fahrenheit. Maybe this would be a nice time to go outside."
       )
       print(result)
 
@@ -146,42 +101,37 @@ def send_weather_message():
       print(f"Error: {e}")
 
 
-# This will stay commented out until I can see if it can be used to check the weather as well as send a message.
-def send_test_message_scheduled():
-  """
-  uses Slack's scheduleMessage function to check the weather and send a message at a specified time daily.
-  """
+# This will stay commented out until I can see if it can be used to check the weather as well as send a message. Doesn't seem to be a way to make this check weather on a schedule as well - probably won't be right for my needs, since weather check should happen right before message.
+# def send_test_message_scheduled():
+#   """
+#   uses Slack's scheduleMessage function to check the weather and send a message at a specified time daily. 
+#   """
 
-  # minute_from_now = datetime.date.today() + datetime.timedelta(minutes=1)
-  now = datetime.date.today()
-  scheduled_time = datetime.time(hour=15, minute=39)
-  schedule_timestamp = datetime.datetime.combine(now, scheduled_time).strftime('%s')
+#   today = datetime.date.today()
+#   scheduled_time = datetime.time(hour=16, minute=23)
+#   schedule_timestamp = datetime.datetime.combine(today, scheduled_time).strftime('%s')
 
-  channel_id = os.environ.get('BOT_CHANNEL_ID')
-  
-  # if datetime
+#   channel_id = os.environ.get('BOT_CHANNEL_ID')
 
+#     try:
+#       result = client.chat_scheduleMessage(
+#           channel=channel_id,
+#           text=f"looking to the future",
+#           post_at=schedule_timestamp
+#       )
+#       # Log the result
+#       logger.info(result)
 
-  try:
-    result = client.chat_scheduleMessage(
-        channel=channel_id,
-        text="looking to the future",
-        post_at=schedule_timestamp
-    )
-    # Log the result
-    logger.info(result)
-
-  except SlackApiError as e:
-    logger.error("Error scheduling message: {}".format(e))
+#     except SlackApiError as e:
+#       logger.error("Error scheduling message: {}".format(e))
 
 
 def schedule_weather_trigger():
   """
   Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted
-
   """
 
-  schedule.every().day.at("11:59").do(send_weather_message)
+  schedule.every().day.at("16:33").do(send_weather_message)
   while True:
         schedule.run_pending()
         time.sleep(1)
@@ -224,10 +174,11 @@ def send_test_dm():
 
     
 if __name__ == "__main__":
-    # schedule_weather_trigger()
+    schedule_weather_trigger()
     # check_weather()
     # send_weather_message()
-    send_test_message_scheduled()
+    # send_test_message_scheduled()
     app.start(port=int(os.environ.get("PORT", 3000)))
+
 
     # get_channel_id()

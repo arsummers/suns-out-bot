@@ -34,8 +34,7 @@ IMPORTANT!
 -  Saves time having to check the weather
 
 ## Limitations
-- The weather report can be wrong
-- This app is created by a human, and sometimes humans create bugs
+- The weather report can be wrong 
 
 ## Testing
 - [ ] It should send a message at the right time

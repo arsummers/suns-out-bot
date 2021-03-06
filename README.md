@@ -20,22 +20,21 @@ IMPORTANT!
 
 - [ ] should have ability to mute for set periods of time, if possible
 
-- [ ] should have ability to configure the number of notifications per week. Checks weekly weather on Monday morning. If the whole week should be sunny, it can send out only 3 messages/week. Sunny day notifs are more important when they aren't regular.
 
 - [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
 
 
 ## Stretch goals
 
-- [ ] make the API easily access other cityies upon setup in a workspace
+- [ ] make the API easily access other cities upon setup in a workspace
 
 ## Use cases
-- [ ] People in offices with limited window access
-- [ ] Gives more time to plan lunch breaks
-- [ ] Saves time having to check the weather
+-  People in offices with limited window access
+-  Gives more time to plan lunch breaks
+-  Saves time having to check the weather
 
 ## Limitations
-- [ ] The weather report can be wrong
+- The weather report can be wrong 
 
 ## Testing
 - [ ] It should send a message at the right time
@@ -81,15 +80,21 @@ IMPORTANT!
 - In your `.env` file, add these elements:
     - `SLACK_BOT_TOKEN`
         - needed for setting up the basic development Slack server
-        - Detailed instructions on grabbing it here: 
+        - Detailed instructions on setting up and grabbing your bot user token [here](https://api.slack.com/authentication/token-types)
     - `SLACK_SIGNING SECRET`
         - also needed to set up your Slack development server
-        - Detailed instructions on grabbing it here:
+        - Instructions on grabbing that [here](https://api.slack.com/authentication/verifying-requests-from-slack#signing_secrets_admin_page):
     - `BOT_CHANNEL_ID`
+        - comment `get_channel_id` back in at the bottom of `app.py`
+        - run `python app.py`
         - Enter `https://slack.com/api/conversations.list` into Postman, or ping it from your terminal. It will call the `get_channel_id` function, and return a JSON response with information about the channel. Then, you can copy the value in the `id` section into your `.env` file.
     - `WEATHER_API_KEY`
         - needed to access the weather report. You can change the city/zip code as needed.
-        - Found at Weatherbit here: 
+        - Found at Weatherbit [here](https://www.weatherbit.io/)
+    - `ZIP_CODE`
+        - This is needed so that the weatherbit API can know which location to check. Zip code is more exact and handles duplicates better than a city name.
+
+- While in development mode, you will need to run `export YOUR_ENV_KEY=YOUR_ENV_VALUE` in the terminal for each item in the list above, e.g. `export ZIP_CODE=12345`
 - Deployment incoming
 - Don't forget to invite `suns-out-bot` to the channel you want it to post to, otherwise you will get an error.
 
@@ -101,3 +106,6 @@ IMPORTANT!
 
 3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
 
+## Useful Links
+
+(Slack message scheduling)[https://api.slack.com/messaging/scheduling]

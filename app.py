@@ -139,15 +139,15 @@ def schedule_weather_trigger():
 
 
 #################################
-#        STRETCH GOAL           #
+#        STRETCH GOAL S          #
 #################################
-def send_test_dm():
+#def send_test_dm():
   # should start a 1 one 1 conversation with a user when triggered. Should default to DM, since it's ableist to assume everyone in a channel is able to step outside.
   # will need to grab conversation ID
   # "provide the user's user ID as the channel value "
   # beware of channel_not_found errors
 
-  pass
+  #pass
 
 
 

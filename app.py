@@ -103,7 +103,7 @@ def schedule_weather_trigger():
     Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted
     """
 
-    schedule.every().day.at("16:33").do(send_weather_message)
+    schedule.every().day.at("11:59").do(send_weather_message)
     while True:
           schedule.run_pending()
           time.sleep(1)

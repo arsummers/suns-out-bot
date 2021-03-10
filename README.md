@@ -109,3 +109,11 @@ IMPORTANT!
 ## Useful Links
 
 (Slack message scheduling)[https://api.slack.com/messaging/scheduling]
+
+
+## To deploy
+- might need env.py for configuration
+    - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
+
+- a webhook could probably take care of what I'm trying to do
+ - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422

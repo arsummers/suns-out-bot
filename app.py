@@ -83,7 +83,7 @@ def send_weather_message():
     current_weather = check_weather()
     current_temp = check_and_convert_temp()
 
-    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear sky', 'few clouds']
+    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear sky', 'few clouds', 'light rain']
 
     if current_weather in acceptable_weather:
 
@@ -100,13 +100,16 @@ def send_weather_message():
 
 def schedule_weather_trigger():
     """
-    Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted
+    Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted.
     """
+    # gonna try to change over to a webhook
 
-    schedule.every().day.at("11:59").do(send_weather_message)
+    schedule.every().day.at("17:07").do(send_weather_message)
     while True:
           schedule.run_pending()
           time.sleep(1)
+
+
 
     
 if __name__ == "__main__":

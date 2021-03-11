@@ -105,12 +105,31 @@ def schedule_weather_trigger():
     """
     Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted.
     """
-
+    # may have to comment out  while testing webhook - don't want to get rid of it entirely until I know it can be replaced
 
     schedule.every().day.at("16:24").do(send_weather_message)
     while True:
           schedule.run_pending()
           time.sleep(1)
+
+def weather_webhook():
+    while True:
+      current_time = datetime.now()
+      current_hour = current_time.hour
+      current_minute = current_time.minute
+
+      # https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422 is doing the math here for me
+      if current_hour - 12 > 0:
+          sleep_time = 24 - current_hour + 12 - (current_minute/60)
+      elif current_hour - 12 < 0:
+          sleep_time = 12 - current_hour - (current_minute/60)
+      elif current_hour == 12:
+          if current_minute == 0:
+              sleep_time = 0
+          else:
+              sleep_time = 24 - current_hour + 12 - (current_minute/60
+
+      time.sleep(sleep_time * 3600)
 
 
 

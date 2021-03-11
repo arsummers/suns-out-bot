@@ -53,6 +53,9 @@ def check_weather():
     response = requests.get(url)
     json_info = response.json()
     weather_desc = json_info["data"][0]["weather"]["description"]
+    if weather_desc.lower() == "clear sky":
+      print(weather_desc.lower())
+      return "clear skies"
     print(weather_desc.lower())
     return weather_desc.lower()
 
@@ -83,7 +86,7 @@ def send_weather_message():
     current_weather = check_weather()
     current_temp = check_and_convert_temp()
 
-    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear sky', 'few clouds', 'light rain']
+    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds', 'light rain']
 
     if current_weather in acceptable_weather:
 
@@ -102,9 +105,9 @@ def schedule_weather_trigger():
     """
     Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted.
     """
-    # gonna try to change over to a webhook
 
-    schedule.every().day.at("17:07").do(send_weather_message)
+
+    schedule.every().day.at("16:24").do(send_weather_message)
     while True:
           schedule.run_pending()
           time.sleep(1)

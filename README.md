@@ -115,5 +115,5 @@ IMPORTANT!
 - might need env.py for configuration
     - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
 
-- a webhook could probably take care of what I'm trying to do
+- an incoming webhook could probably take care of what I'm trying to do. Incoming webhooks don't appear to be legacy/deprecated
  - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422

@@ -4,6 +4,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
 from slack_sdk import WebClient
+# from slack_sdk.webhook import WebhookClient
 from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 import requests
@@ -100,6 +101,13 @@ def send_weather_message():
       except SlackApiError as e:
         print(f"Error: {e}")
 
+# https://realpython.com/python-sleep/
+def sleep(timeout, retry=3):
+    def decorator(function):
+      def wrapper(*args, **kwargs):
+          retries = 0
+
+
 
 def schedule_weather_trigger():
     """
@@ -112,30 +120,43 @@ def schedule_weather_trigger():
           schedule.run_pending()
           time.sleep(1)
 
-def weather_webhook():
-    while True:
-      current_time = datetime.now()
-      current_hour = current_time.hour
-      current_minute = current_time.minute
+# def weather_webhook():
+#     url = os.environ.get("WEBHOOK_URL")
+#     webhook = WebClient(url)
 
-      # https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422 is doing the math here for me
-      if current_hour - 12 > 0:
-          sleep_time = 24 - current_hour + 12 - (current_minute/60)
-      elif current_hour - 12 < 0:
-          sleep_time = 12 - current_hour - (current_minute/60)
-      elif current_hour == 12:
-          if current_minute == 0:
-              sleep_time = 0
-          else:
-              sleep_time = 24 - current_hour + 12 - (current_minute/60
+#     response = webhook.send(text="webhook text!!")
+#     assert response.status_code == 200
+#     assert response.body == "ok"
 
-      time.sleep(sleep_time * 3600)
+    # while True:
+    #     current_time = datetime.datetime.now()
+    #     current_hour = current_time.hour
+    #     current_minute = current_time.minute
+    #     hour = 13
+    #     minute = 40
+
+    #     # https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422 is doing the math here for me
+    #     if current_hour - hour > minute:
+    #         sleep_time = 24 - current_hour + hour - (current_minute/60)
+    #     elif current_hour - hour < minute:
+    #         sleep_time = hour - current_hour - (current_minute/60)
+    #     elif current_hour == hour:
+    #         if current_minute == minute:
+    #             sleep_time = minute
+    #         else:
+    #             sleep_time = 24 - current_hour + hour - (current_minute/60)
+
+    #     print('hello webhook world')
+    #     send_weather_message()
+
+    #     time.sleep(sleep_time * 3600)
 
 
 
     
 if __name__ == "__main__":
     schedule_weather_trigger()
+    # weather_webhook()
     # check_weather()
     # send_weather_message()
     app.start(port=int(os.environ.get("PORT", 3000)))

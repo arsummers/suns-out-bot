@@ -87,7 +87,7 @@ def send_weather_message():
     current_weather = check_weather()
     current_temp = check_and_convert_temp()
 
-    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds', 'light rain']
+    acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds']
 
     if current_weather in acceptable_weather:
 
@@ -101,69 +101,16 @@ def send_weather_message():
       except SlackApiError as e:
         print(f"Error: {e}")
 
-# https://realpython.com/python-sleep/
-# def sleep(timeout, retry=3):
-#     def decorator(function):
-#       def wrapper(*args, **kwargs):
-#           retries = 0
-#           while retries < retry:
-#               try:
-#                   value = function(*args, **kwargs)
-#                   if value is None:
-#                       return
-#               except:
-#                   print(f'Sleeping for {timeout} seconds')
-#                   time.sleep(timeout)
-#                   retries += 1
-
-#       return wrapper
-#     return decorator
-
-
-# @sleep(60)
 def schedule_weather_trigger():
     """
-    Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted.
+    Set to run in the background. Sleeps for a day, calls send_weather_message, which checks the weather and sends a message. 
     """
-    # may have to comment out  while testing webhook - don't want to get rid of it entirely until I know it can be replaced
 
-    schedule.every().day.at("16:43").do(send_weather_message)
+
+    schedule.every().day.at("11:59").do(send_weather_message)
     while True:
           schedule.run_pending()
-          time.sleep(1)
-
-# def weather_webhook():
-#     url = os.environ.get("WEBHOOK_URL")
-#     webhook = WebClient(url)
-
-#     response = webhook.send(text="webhook text!!")
-#     assert response.status_code == 200
-#     assert response.body == "ok"
-
-    # while True:
-    #     current_time = datetime.datetime.now()
-    #     current_hour = current_time.hour
-    #     current_minute = current_time.minute
-    #     hour = 13
-    #     minute = 40
-
-    #     # https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422 is doing the math here for me
-    #     if current_hour - hour > minute:
-    #         sleep_time = 24 - current_hour + hour - (current_minute/60)
-    #     elif current_hour - hour < minute:
-    #         sleep_time = hour - current_hour - (current_minute/60)
-    #     elif current_hour == hour:
-    #         if current_minute == minute:
-    #             sleep_time = minute
-    #         else:
-    #             sleep_time = 24 - current_hour + hour - (current_minute/60)
-
-    #     print('hello webhook world')
-    #     send_weather_message()
-
-    #     time.sleep(sleep_time * 3600)
-
-
+          time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
 
     
 if __name__ == "__main__":

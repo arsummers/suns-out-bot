@@ -100,14 +100,13 @@ IMPORTANT!
 
 # Change Log
 
-2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel. Next up: make it work as a DM
+2/16 : upon calling "schedule_weather_trigger", the app will call the function to send a message at the given time. When send_message is called, it will call "check_weather" at that moment, so that the weather report will be as accurate as the API can make it. If the weather is nice enough, a message will be sent to the "general" channel.
 
 2/19: Added temperatue to the message the bot sends, so users can have a better sense of whether or not they actually want to go outside.
 
-3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
+3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities, such as Portland, Oregon vs Portland, Maine.
 
-3/15: Still not happy with how the scheduler runs. Might have to look into cron jobs, or some type of recursive scheduling.
-
+3/15: Still not happy with how the scheduler runs. Might have to look into cron jobs, or some type of recursive scheduling. Best way might be to just make it sleep for 1 day between calls.
 ## Useful Links
 
 (Slack message scheduling)[https://api.slack.com/messaging/scheduling]

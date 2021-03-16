@@ -102,35 +102,35 @@ def send_weather_message():
         print(f"Error: {e}")
 
 # https://realpython.com/python-sleep/
-def sleep(timeout, retry=3):
-    def decorator(function):
-      def wrapper(*args, **kwargs):
-          retries = 0
-          while retries < retry:
-              try:
-                  value = function(*args, **kwargs)
-                  if value is None:
-                      return
-              except:
-                  print(f'Sleeping for {timeout} seconds')
-                  time.sleep(timeout)
-                  retries += 1
+# def sleep(timeout, retry=3):
+#     def decorator(function):
+#       def wrapper(*args, **kwargs):
+#           retries = 0
+#           while retries < retry:
+#               try:
+#                   value = function(*args, **kwargs)
+#                   if value is None:
+#                       return
+#               except:
+#                   print(f'Sleeping for {timeout} seconds')
+#                   time.sleep(timeout)
+#                   retries += 1
 
-      return wrapper
-    return decorator
+#       return wrapper
+#     return decorator
 
 
-@sleep(60)
+# @sleep(60)
 def schedule_weather_trigger():
     """
     Set to run in the background. Calls send_weather_message, which checks the weather and sends a message. Time can be adjusted.
     """
     # may have to comment out  while testing webhook - don't want to get rid of it entirely until I know it can be replaced
 
-    schedule.every().day.at("16:57").do(send_weather_message)
+    schedule.every().day.at("16:43").do(send_weather_message)
     while True:
           schedule.run_pending()
-          # time.sleep(1)
+          time.sleep(1)
 
 # def weather_webhook():
 #     url = os.environ.get("WEBHOOK_URL")

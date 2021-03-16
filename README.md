@@ -106,6 +106,8 @@ IMPORTANT!
 
 3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities.
 
+3/15: Still not happy with how the scheduler runs. Might have to look into cron jobs, or some type of recursive scheduling.
+
 ## Useful Links
 
 (Slack message scheduling)[https://api.slack.com/messaging/scheduling]
@@ -115,5 +117,4 @@ IMPORTANT!
 - might need env.py for configuration
     - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
 
-- an incoming webhook could probably take care of what I'm trying to do. Incoming webhooks don't appear to be legacy/deprecated
- - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-2-eebf2b329422
+

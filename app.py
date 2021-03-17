@@ -115,7 +115,6 @@ def schedule_weather_trigger():
     
 if __name__ == "__main__":
     schedule_weather_trigger()
-    # weather_webhook()
     # check_weather()
     # send_weather_message()
     app.start(port=int(os.environ.get("PORT", 3000)))

@@ -116,4 +116,5 @@ IMPORTANT!
 - might need env.py for configuration
     - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
 
+    - going to try running this without a worker, since my code should handle that.
 

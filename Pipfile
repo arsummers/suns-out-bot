@@ -8,6 +8,7 @@ slack-bolt = "*"
 requests = "*"
 slack-logger = "*"
 schedule = "*"
+gunicorn = "*"
 
 [dev-packages]
 

@@ -119,4 +119,5 @@ IMPORTANT!
     - going to try running this without a worker, since my code should handle that.
     - the Port might cause problems
     - Heroku errors, as expected
+- should make a "/hello" command to test that this works.
 

@@ -17,10 +17,11 @@ import time
 
 
 class SunsOut:
-    def __init__(self, channel):
-        self.channel = channel
 
-    def check_weather():
+    def __init__(self):
+        pass
+
+    def check_weather(self):
         """
         Pings weatherbit API, and returns a JSON response of the weather description in the provided zipcode. JSON response gets converted to lowercase for easier handling.
         """
@@ -39,6 +40,51 @@ class SunsOut:
         print(weather_desc.lower())
         return weather_desc.lower()
 
-    
-    if __name__ == "__main__":
-        check_weather()
+    def check_and_convert_temp(self):
+        """
+        Pings weatherbit API, returns a JSON response of the current temperatue, and converts it to Fahrenheit.
+        """
+        key = os.environ.get('WEATHER_API_KEY')
+        zip_code = os.environ.get('ZIP_CODE')
+
+        url = f'https://api.weatherbit.io/v2.0/current?postal_code={zip_code}&country=US&key={key}'
+
+        response = requests.get(url)
+        json_info = response.json()
+        celsius_temp = json_info["data"][0]["temp"]
+        fahrenheit_temp = int((celsius_temp * 9/5) + 32)
+        return fahrenheit_temp
+
+    def send_weather_message(self):
+        """
+        Checks weather. If certain conditions are met, it will send a message saying the current weather conditions and temperature, and a prompt to go outside.
+        """
+
+        client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
+
+
+        channel_id = os.environ.get('BOT_CHANNEL_ID')
+        today = date.today()
+        d3 = today.strftime("%m/%d/%y")
+
+        current_weather = self.check_weather()
+        current_temp = self.check_and_convert_temp()
+
+        acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds', 'light rain']
+
+        if current_weather in acceptable_weather:
+
+            try:
+                result = client.chat_postMessage(
+                channel = channel_id,
+                text = f"Good afternoon! According to my calculations, the outside world is {current_temp} degrees Fahrenheit and features {current_weather}. Maybe this would be a nice time to go outside."
+                )
+                print(result)
+
+            except SlackApiError as e:
+                print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    sun = SunsOut()
+    sun.send_weather_message()

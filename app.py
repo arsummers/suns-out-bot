@@ -42,6 +42,7 @@ def get_channel_id():
     except SlackApiError as e:
       print(f"Error: {e}")
 
+
 def check_weather():
     """
     Pings weatherbit API, and returns a JSON response of the weather description in the provided zipcode. JSON response gets converted to lowercase for easier handling.

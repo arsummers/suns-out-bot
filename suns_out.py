@@ -84,7 +84,19 @@ class SunsOut:
             except SlackApiError as e:
                 print(f"Error: {e}")
 
+    def schedule_weather_trigger(self):
+        """
+        Set to run in the background. Sleeps for a day, calls send_weather_message, which checks the weather and sends a message. 
+        """
+
+
+        schedule.every().day.at("17:34").do(self.send_weather_message)
+        while True:
+            schedule.run_pending()
+            #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
+            time.sleep(1) # for testing
+
 
 if __name__ == "__main__":
     sun = SunsOut()
-    sun.send_weather_message()
+    sun.schedule_weather_trigger()

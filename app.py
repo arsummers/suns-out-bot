@@ -108,10 +108,11 @@ def schedule_weather_trigger():
     """
 
 
-    schedule.every().day.at("11:59").do(send_weather_message)
+    schedule.every().day.at("16:55").do(send_weather_message)
     while True:
           schedule.run_pending()
-          time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
+          #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
+          time.sleep(1) # for testing
 
     
 if __name__ == "__main__":

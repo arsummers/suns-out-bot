@@ -90,7 +90,7 @@ class SunsOut:
         """
 
 
-        schedule.every().day.at("18:16").do(self.send_weather_message)
+        schedule.every().day.at("18:36").do(self.send_weather_message)
         while True:
             schedule.run_pending()
             #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time

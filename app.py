@@ -28,32 +28,35 @@ app = Flask(__name__)
 # might need events adapter here
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
-def suns_out_bot_go(channel):
+def suns_out_bot_go():
     """
     instantiate SunsOut, make it go
     """
-    suns_out_bot = SunsOut(channel)
+    suns_out_bot = SunsOut()
 
     send_to_slack = suns_out_bot.schedule_weather_trigger()
+    # send_to_slack = suns_out_bot.send_weather_message()
+    
+    client.chat_postMessage(**send_to_slack)
 
 
 
-def get_channel_id():
-    """
-    gets the channel ID of all your Slack channels.
-    """
-    channel_name = "general"
+# def get_channel_id():
+#     """
+#     gets the channel ID of all your Slack channels.
+#     """
+#     channel_name = "general"
 
-    try:
+#     try:
 
-      for response in client.conversations_list():
-        for channel in result["channels"]:
-          if channel["name"] == channel_name:
-            conversation_id = channel["id"]
-            print(f"Found conversation ID: {conversation_id}")
-            break
-    except SlackApiError as e:
-      print(f"Error: {e}")
+#       for response in client.conversations_list():
+#         for channel in result["channels"]:
+#           if channel["name"] == channel_name:
+#             conversation_id = channel["id"]
+#             print(f"Found conversation ID: {conversation_id}")
+#             break
+#     except SlackApiError as e:
+#       print(f"Error: {e}")
 
 
 # def check_weather():
@@ -134,6 +137,7 @@ if __name__ == "__main__":
     # check_weather()
     # send_weather_message()
     # app.start(port=int(os.environ.get("PORT", 3000)))
+    suns_out_bot_go()
     app.run(host='0.0.0.0', port=3000)
 
 

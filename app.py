@@ -30,12 +30,11 @@ client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 def suns_out_bot_go():
     """
-    instantiate SunsOut, make it go
+    instantiate SunsOut from other module, make it go
     """
     suns_out_bot = SunsOut()
 
     send_to_slack = suns_out_bot.schedule_weather_trigger()
-    # send_to_slack = suns_out_bot.send_weather_message()
     
     client.chat_postMessage(**send_to_slack)
 

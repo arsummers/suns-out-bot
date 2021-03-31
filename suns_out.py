@@ -1,5 +1,3 @@
-# going to try moving all the weather testing functions here, then importing it into the Flask app.
-
 # imports up here!
 import datetime
 from datetime import date
@@ -7,7 +5,6 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
 from slack_sdk import WebClient
-# from slack_sdk.webhook import WebhookClient
 from slack_sdk.errors import SlackApiError
 from slack_bolt import App
 import requests
@@ -90,15 +87,10 @@ class SunsOut:
         """
 
         #left in for testing that deployed version will loop
-        schedule.every(20).seconds.do(self.send_weather_message) 
+        schedule.every(60).seconds.do(self.send_weather_message) 
 
-        #schedule.every().day.at("17:06").do(self.send_weather_message) #commented out for testing
+        #schedule.every().day.at("11:59").do(self.send_weather_message) #commented out for testing
         while True:
             schedule.run_pending()
             #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
             time.sleep(1) # for testing
-
-
-# if __name__ == "__main__":
-#     sun = SunsOut()
-#     sun.schedule_weather_trigger()

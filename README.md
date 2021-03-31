@@ -107,6 +107,9 @@ IMPORTANT!
 3/1: Functionality is all here. Updated weatherbit API URL to take zipcodes instead of cities. Will give a more accurate weather report, and handles cities that share names with other cities, such as Portland, Oregon vs Portland, Maine.
 
 3/15: Still not happy with how the scheduler runs. Might have to look into cron jobs, or some type of recursive scheduling. Best way might be to just make it sleep for 1 day between calls.
+
+3/30: have testing loop ready for scheduler, ready to try deploying. If successful, can bring in daily loop on next deploy push
+
 ## Useful Links
 
 (Slack message scheduling)[https://api.slack.com/messaging/scheduling]
@@ -120,4 +123,8 @@ IMPORTANT!
     - the Port might cause problems
     - Heroku errors, as expected
 - should make a "/hello" command to test that this works.
-
+- am I gonna need to migrate this over to Flask to get it deployed??
+- Will probably have an easier time if I move this over to Flask. Better support for deployment, since Bolt doesn't have many docs for that.
+    try: https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04
+- Moved into a Flask app.
+- Will need to test via IP address - waiting until on home network to change that URL, and add event subs. 

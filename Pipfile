@@ -9,6 +9,7 @@ requests = "*"
 slack-logger = "*"
 schedule = "*"
 gunicorn = "*"
+flask = "*"
 
 [dev-packages]
 

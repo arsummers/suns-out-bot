@@ -123,7 +123,6 @@ IMPORTANT!
     - the Port might cause problems
     - Heroku errors, as expected
 - should make a "/hello" command to test that this works.
-- am I gonna need to migrate this over to Flask to get it deployed??
 - Will probably have an easier time if I move this over to Flask. Better support for deployment, since Bolt doesn't have many docs for that.
     try: https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04
 - Moved into a Flask app.

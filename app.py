@@ -35,8 +35,7 @@ def suns_out_bot_go():
     suns_out_bot = SunsOut()
 
     send_to_slack = suns_out_bot.schedule_weather_trigger()
-    
-    client.chat_postMessage(**send_to_slack)
+     
 
 
 
@@ -136,7 +135,7 @@ if __name__ == "__main__":
     # check_weather()
     # send_weather_message()
     # app.start(port=int(os.environ.get("PORT", 3000)))
-    suns_out_bot_go()
+    # suns_out_bot_go()
     app.run(host='0.0.0.0', port=3000)
 
 

@@ -127,3 +127,5 @@ IMPORTANT!
     try: https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04
 - Moved into a Flask app.
 - Will need to test via IP address - waiting until on home network to change that URL, and add event subs. 
+- for some reason the Flask aspect never starts when I have scheduler running. Going to try using this:
+https://pypi.org/project/APScheduler/

@@ -130,13 +130,13 @@ def get_channel_id():
 #           #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
 #           time.sleep(1) # for testing
 
-    
+suns_out_bot_go()    
 if __name__ == "__main__":
     # schedule_weather_trigger()
     # check_weather()
     # send_weather_message()
     # app.start(port=int(os.environ.get("PORT", 3000)))
-    suns_out_bot_go()
+    # suns_out_bot_go()
     app.run(host='0.0.0.0', port=3000)
 
 

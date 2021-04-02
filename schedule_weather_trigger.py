@@ -1,8 +1,7 @@
 # this is the older function scheduler that works when it runs locally, but prevents the flask app from starting up while it's running. preserved here so that I can get back to it if other options fail even more.
 
 
-
-  def schedule_weather_trigger(self):
+def schedule_weather_trigger(self):
         """
         Set to run in the background. Sleeps for a day, calls send_weather_message, which checks the weather and sends a message. 
 

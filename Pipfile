@@ -10,6 +10,7 @@ slack-logger = "*"
 schedule = "*"
 gunicorn = "*"
 flask = "*"
+apscheduler = "*"
 
 [dev-packages]
 

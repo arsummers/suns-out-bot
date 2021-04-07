@@ -84,14 +84,10 @@ class SunsOut:
     def schedule_weather_trigger(self):
         """
         Set to run in the background. Sleeps for a day, calls send_weather_message, which checks the weather and sends a message. 
-
-        Trying to rewrite with APScheduler
         """
-        # add_job() adds a job to the scheduler
-
-        #self.send_weather_message()
 
         scheduler = BackgroundScheduler()
-        job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
+        job = scheduler.add_job(self.send_weather_message, 'cron', hour=17, minute=24)
+        # job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
 
         scheduler.start()

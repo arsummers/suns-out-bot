@@ -139,3 +139,5 @@ https://pypi.org/project/APScheduler/
     - delete apscheduler
     - 
 - Flask app boots up properly as soon as the function ends, doesn't boot when the function runs continuously.
+
+APScheduler cron docs: https://apscheduler.readthedocs.io/en/v2.1.2/cronschedule.html, https://apscheduler.readthedocs.io/en/stable/faq.html 

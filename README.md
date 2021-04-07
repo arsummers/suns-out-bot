@@ -123,8 +123,21 @@ IMPORTANT!
     - the Port might cause problems
     - Heroku errors, as expected
 - should make a "/hello" command to test that this works.
-- am I gonna need to migrate this over to Flask to get it deployed??
 - Will probably have an easier time if I move this over to Flask. Better support for deployment, since Bolt doesn't have many docs for that.
     try: https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04
 - Moved into a Flask app.
-- Will need to test via IP address - waiting until on home network to change that URL, and add event subs. 
+- Will need to test via IP address - waiting until on home network to change that URL, and add event subs.
+
+
+- for some reason the Flask aspect never starts when I have scheduler running. Going to try using this:
+https://pypi.org/project/APScheduler/
+- will try using BackgroundScheduler, so that it runs in the background from inside the app
+- may or may not have to worry about jobstore
+- will need to use cron trigger to run it at certain times of day
+- if fails:
+    - seriously just look into jobstores for the apsched library
+    - delete apscheduler
+    - 
+- Flask app boots up properly as soon as the function ends, doesn't boot when the function runs continuously.
+
+APScheduler cron docs: https://apscheduler.readthedocs.io/en/v2.1.2/cronschedule.html, https://apscheduler.readthedocs.io/en/stable/faq.html 

@@ -35,8 +35,7 @@ def suns_out_bot_go():
     suns_out_bot = SunsOut()
 
     send_to_slack = suns_out_bot.schedule_weather_trigger()
-    
-    client.chat_postMessage(**send_to_slack)
+     
 
 
 
@@ -130,7 +129,7 @@ def get_channel_id():
 #           #time.sleep(86399) #sleeps for a day minus a second, then runs. Cuts down on unnecessary up time
 #           time.sleep(1) # for testing
 
-    
+# suns_out_bot_go()    
 if __name__ == "__main__":
     # schedule_weather_trigger()
     # check_weather()

@@ -1,0 +1,1 @@
+from app import suns_out_bot_go

@@ -1,1 +1,4 @@
-from app import suns_out_bot_go
+from . import app
+
+if __name__ == "__main__":
+    app.run()

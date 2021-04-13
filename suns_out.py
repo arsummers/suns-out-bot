@@ -67,7 +67,7 @@ class SunsOut:
         current_weather = self.check_weather()
         current_temp = self.check_and_convert_temp()
 
-        acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds', 'light rain']
+        acceptable_weather = ['overcast clouds', 'scattered clouds', 'clear skies', 'few clouds']
 
         if current_weather in acceptable_weather:
 
@@ -87,7 +87,7 @@ class SunsOut:
         """
 
         scheduler = BackgroundScheduler()
-        job = scheduler.add_job(self.send_weather_message, 'cron', hour=17, minute=24)
-        # job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
+        # job = scheduler.add_job(self.send_weather_message, 'cron', hour=12, minute=00)
+        job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
 
         scheduler.start()

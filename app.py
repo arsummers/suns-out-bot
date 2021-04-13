@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # check_weather()
     # send_weather_message()
     suns_out_bot_go()
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=8080)
 
 
 

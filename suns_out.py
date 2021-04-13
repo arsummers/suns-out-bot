@@ -87,7 +87,7 @@ class SunsOut:
         """
 
         scheduler = BackgroundScheduler()
-        job = scheduler.add_job(self.send_weather_message, 'cron', hour=12, minute=00)
-        # job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
+        # job = scheduler.add_job(self.send_weather_message, 'cron', hour=12, minute=00)
+        job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
 
         scheduler.start()

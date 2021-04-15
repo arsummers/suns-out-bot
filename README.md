@@ -95,8 +95,24 @@ IMPORTANT!
         - This is needed so that the weatherbit API can know which location to check. Zip code is more exact and handles duplicates better than a city name.
 
 - While in development mode, you will need to run `export YOUR_ENV_KEY=YOUR_ENV_VALUE` in the terminal for each item in the list above, e.g. `export ZIP_CODE=12345`
-- Deployment incoming
+
 - Don't forget to invite `suns-out-bot` to the channel you want it to post to, otherwise you will get an error.
+
+## Deploy on Digital Ocean
+- Copy the contents of these files, and move them to your github repo so they can be deployed
+    - app.py
+    - suns_out.py
+    - requirements.txt
+    - Pipfile.lock
+    - .gitignore
+- run `pipenv install` for good measure
+- log in or create an account and go to the green **Create** tab
+- Create a new app
+- Follow the steps to link up your repo up to digital ocean
+- You should be fine on the $5/month plan
+- When prompted, fill in your `env` values
+- Then you should be good to go! 
+- If you want to easily test that this is working, I've left in some commented out code that will run every minute, so you won't have to wait until your specified time for a reaction.
 
 # Change Log
 
@@ -115,7 +131,8 @@ IMPORTANT!
 (Slack message scheduling)[https://api.slack.com/messaging/scheduling]
 
 
-## To deploy
+### notes
+
 - might need env.py for configuration
     - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
 

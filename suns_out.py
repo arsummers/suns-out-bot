@@ -85,11 +85,12 @@ class SunsOut:
         """
         Set to run in the background. Sleeps for a day, calls send_weather_message, which checks the weather and sends a message. 
 
-
+        When deployed, the clock goes by Greenwich Standard Time. If you are on the west coast of the US during during Daylight time, you will have to adjust by 7 hours
         """
 
         scheduler = BackgroundScheduler()
         job = scheduler.add_job(self.send_weather_message, 'cron', hour=19, minute=15)
-        # job = scheduler.add_job(self.send_weather_message, 'interval', seconds=10)
+        # left in for easy testing
+        # job = scheduler.add_job(self.send_weather_message, 'interval', seconds=60)
 
         scheduler.start()

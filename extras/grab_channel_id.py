@@ -1,3 +1,4 @@
+
 def get_channel_id():
     """
     gets the channel ID of all your Slack channels.
@@ -14,3 +15,5 @@ def get_channel_id():
             break
     except SlackApiError as e:
       print(f"Error: {e}")
+
+get_channel_id()

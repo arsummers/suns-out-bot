@@ -17,14 +17,8 @@ from slack_logger import SlackHandler, SlackFormatter
 
 logger = logging.getLogger(__name__)
 
-# app = App(
-#     token = os.environ.get("SLACK_BOT_TOKEN"),
-#     signing_secret = os.environ.get("SLACK_SIGNING_SECRET")
-# )
-
-
 app = Flask(__name__)
-# might need events adapter here
+
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 def suns_out_bot_go():

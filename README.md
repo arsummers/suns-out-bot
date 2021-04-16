@@ -1,20 +1,17 @@
 # suns-out-bot
 Slack bot that lets you know when it is sunny outside, so you can take a walk or otherwise step outside during your lunch break.
 
-IMPORTANT!
-- will need to run `ngrok http 3000` command and `python app.py` in separate windows for this to start working. Then will need to update ngrok url under event subscriptions tag
-
-
-
 ## Core functionality
 
 - [x] app should ping a weather API for local weather
 
 - [x] if weather is sunny or otherwise dry, if should send a message that it's sunny out, and maybe you should step outside
 
-- [x] it should send the message at 10:30 or 11:00 AM, so that the user has time to decide if they want to go outside on a break later in the day
+- [x] it should send the message around lunch time, so that the user has accurate information
 
 - [x] The app should know the local time
+
+## Stretch goals
 
 - [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them - DEBATABLE. Might be best to send to bot channel.
 
@@ -23,18 +20,17 @@ IMPORTANT!
 
 - [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
 
-
-## Stretch goals
-
 - [ ] make the API easily access other cities upon setup in a workspace
 
 ## Use cases
 -  People in offices with limited window access
--  Gives more time to plan lunch breaks
+-  Gives people accurate weather reports on their lunch breaks
 -  Saves time having to check the weather
 
 ## Limitations
-- The weather report can be wrong 
+- The weather report can be wrong
+- The timing on the scheduler syncs up with Greenwich Standard Time when deployed, so the time will have to be adjusted manually.
+- Can't currently support multiple locations per bot instance
 
 ## Testing
 - [ ] It should send a message at the right time
@@ -45,37 +41,23 @@ IMPORTANT!
 
 - [ ] make sure it can have different responses based on user import. If user A tells it to mute, it should stay mute for user A if user B tells it to unmute
 
-
-## Steps
-- [x] finish base bolt tutorial
-- [x] make the bot print a "hello world" to a channel
-- [ ] make the bot print a "hello world" as a DM - PENDING
-- [ ] write tests
-    - [ ] test for API response
-    - [ ] test for timing
-    - [ ] test that message is accurate
-- [x] make the bot print at a certain time, day to day
-- [x] make bot print according to conditionals
-- [x] make bot consume weather API
-    - [x] user weatherbit API - I know it works
-    - [x] test file can read weather description 
-- [x] make bot react to weather API
-- [ ] add pause/mute functions
-
-## APIs
+## APIs and Major Libraries
 - Slack's Bolt library
 - Weatherbit API
 - chat.PostMessage API
-
-
+- APScheduler
+    - docs [here](https://apscheduler.readthedocs.io/en/stable/faq.html)
 
 # How to add to your workspace
 - Fork and clone this repo
 - Sign up with Slack as a developer
-- Add these permissions to your bot:
-    - 
-    - 
-- Sign up with weatherbit and grab your API key. Doublecheck that you have a `.gitignore` file.
+- Add these scopes to your bot:
+    - chat:write
+    - channels:read
+    - incoming-webhook
+
+- Sign up with weatherbit and grab your API key [here](https://www.weatherbit.io/).
+- Doublecheck that you have a `.gitignore` file.
 - create a `.env` file for your secret keys
 - In your `.env` file, add these elements:
     - `SLACK_BOT_TOKEN`
@@ -110,9 +92,11 @@ IMPORTANT!
 - Create a new app
 - Follow the steps to link up your repo up to digital ocean
 - You should be fine on the $5/month plan
-- When prompted, fill in your `env` values
+- When prompted, fill in your `env` values and continue to the final screen to deploy
 - Then you should be good to go! 
-- If you want to easily test that this is working, I've left in some commented out code that will run every minute, so you won't have to wait until your specified time for a reaction.
+
+
+- If you want to easily test that this is working, I've left in some commented out code that will run every minute, so you won't have to wait until your specified time for a reaction. It is under the `schedule_weather_trigger` function inside `suns_out.py`
 
 # Change Log
 
@@ -126,35 +110,8 @@ IMPORTANT!
 
 3/30: have testing loop ready for scheduler, ready to try deploying. If successful, can bring in daily loop on next deploy push
 
-## Useful Links
+### Various sources and references
 
-(Slack message scheduling)[https://api.slack.com/messaging/scheduling]
-
-
-### notes
-
-- might need env.py for configuration
-    - https://medium.com/the-andela-way/how-to-build-a-task-notification-bot-for-slack-with-python-part-1-333cb50985f4
-
-    - going to try running this without a worker, since my code should handle that.
-    - the Port might cause problems
-    - Heroku errors, as expected
-- should make a "/hello" command to test that this works.
-- Will probably have an easier time if I move this over to Flask. Better support for deployment, since Bolt doesn't have many docs for that.
-    try: https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04
-- Moved into a Flask app.
-- Will need to test via IP address - waiting until on home network to change that URL, and add event subs.
-
-
-- for some reason the Flask aspect never starts when I have scheduler running. Going to try using this:
-https://pypi.org/project/APScheduler/
-- will try using BackgroundScheduler, so that it runs in the background from inside the app
-- may or may not have to worry about jobstore
-- will need to use cron trigger to run it at certain times of day
-- if fails:
-    - seriously just look into jobstores for the apsched library
-    - delete apscheduler
-    - 
-- Flask app boots up properly as soon as the function ends, doesn't boot when the function runs continuously.
-
-APScheduler cron docs: https://apscheduler.readthedocs.io/en/v2.1.2/cronschedule.html, https://apscheduler.readthedocs.io/en/stable/faq.html 
+- [Getting started with Slack and Python](https://api.slack.com/start/building/bolt-python)
+- [Additional tutorial for Slack and Python](https://www.digitalocean.com/community/tutorials/how-to-build-a-slackbot-in-python-on-ubuntu-20-04)
+- [Deploying Slackbot to Digital Ocean - video](https://www.youtube.com/watch?v=FdXS-NpxtSo)

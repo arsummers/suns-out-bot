@@ -11,45 +11,8 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 
 - [x] The app should know the local time
 
-## Stretch goals
-
-- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them - DEBATABLE. Might be best to send to bot channel.
-
-- [ ] should have ability to mute for set periods of time, if possible
-
-
-- [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
-
-- [ ] make the API easily access other cities upon setup in a workspace
-
-## Use cases
--  People in offices with limited window access
--  Gives people accurate weather reports on their lunch breaks
--  Saves time having to check the weather
-
-## Limitations
-- The weather report can be wrong
-- The timing on the scheduler syncs up with Greenwich Standard Time when deployed, so the time will have to be adjusted manually.
-- Can't currently support multiple locations per bot instance
-
-## Testing
-- [ ] It should send a message at the right time
-
-- [ ] It should send certain messages under certain conditions
-
-- [ ] If those conditions aren't met, it shouldn't send any messages
-
-- [ ] make sure it can have different responses based on user import. If user A tells it to mute, it should stay mute for user A if user B tells it to unmute
-
-## APIs and Major Libraries
-- Slack's Bolt library
-- Weatherbit API
-- chat.PostMessage API
-- APScheduler
-    - docs [here](https://apscheduler.readthedocs.io/en/stable/faq.html)
-
 # How to add to your workspace
-- Fork and clone this repo
+- Hit that green "Use Template" button up at the top
 - Sign up with Slack as a developer
 - Add these scopes to your bot:
     - chat:write
@@ -97,6 +60,36 @@ Slack bot that lets you know when it is sunny outside, so you can take a walk or
 
 
 - If you want to easily test that this is working, I've left in some commented out code that will run every minute, so you won't have to wait until your specified time for a reaction. It is under the `schedule_weather_trigger` function inside `suns_out.py`
+
+
+## Stretch goals
+
+- [ ] should send messages to DMs, so that entire channels won't have to have the reminders if they don't want them - DEBATABLE. Might be best to send to bot channel.
+
+- [ ] should have ability to mute for set periods of time, if possible
+
+
+- [ ] some ability to opt in to the bot on the user's company Slack. As in, add it to your personal DMs, but not have it message everyone. Maybe something like "@suns-out-bot /unmute or /unmute"
+
+- [ ] make the API easily access other cities upon setup in a workspace
+
+## Use cases
+-  People in offices with limited window access
+-  Gives people accurate weather reports on their lunch breaks
+-  Saves time having to check the weather
+
+## Limitations
+- The weather report can be wrong
+- The timing on the scheduler syncs up with Greenwich Standard Time when deployed, so the time will have to be adjusted manually.
+- Can't currently support multiple locations per bot instance
+
+## APIs and Major Libraries
+- Slack's Bolt library
+- Weatherbit API
+- chat.PostMessage API
+- APScheduler
+    - docs [here](https://apscheduler.readthedocs.io/en/stable/faq.html)
+
 
 # Change Log
 
